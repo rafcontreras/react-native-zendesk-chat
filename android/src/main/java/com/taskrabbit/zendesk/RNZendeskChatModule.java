@@ -74,6 +74,9 @@ public class RNZendeskChatModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void startChat(ReadableMap options) {
         setVisitorInfo(options);
+        if (options.hasKey("disablePreChatForm")) {
+            ChatWidgetService.disable();
+        }
         Activity activity = getCurrentActivity();
         if (activity != null) {
             activity.startActivity(new Intent(mReactContext, ZopimChatActivity.class));
