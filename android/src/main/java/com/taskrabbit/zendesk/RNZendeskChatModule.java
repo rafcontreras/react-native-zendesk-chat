@@ -27,6 +27,7 @@ import com.zopim.android.sdk.model.items.ChatEvent;
 import com.zopim.android.sdk.model.items.RowItem;
 import com.zopim.android.sdk.prechat.ChatListener;
 import com.zopim.android.sdk.prechat.ZopimChatActivity;
+import com.zopim.android.sdk.widget.ChatWidgetService;
 import com.zopim.android.sdk.prechat.ZopimPreChatFragment;
 
 import java.lang.String;
@@ -69,14 +70,12 @@ public class RNZendeskChatModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void init(String key) {
         ZopimChat.init(key);
+        ChatWidgetService.disable();
     }
 
     @ReactMethod
     public void startChat(ReadableMap options) {
         setVisitorInfo(options);
-        if (options.hasKey("disablePreChatForm")) {
-            ChatWidgetService.disable();
-        }
         Activity activity = getCurrentActivity();
         if (activity != null) {
             activity.startActivity(new Intent(mReactContext, ZopimChatActivity.class));
